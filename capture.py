@@ -11,17 +11,21 @@ TEMP = 1
 SEED = 0
 
 
-url = "http://" + LLAMA_IP + ":" + LLAMA_PORT + PATH
+def build_url() -> str:
+    return "http://" + LLAMA_IP + ":" + LLAMA_PORT + PATH
 
-settings = {
-    "model": MODEL,
-    "prompt": PROMPT,
-    "n_predict": N_PREDICT,
-    "n_probs": N_PROBS,
-    "temperature": TEMP,
-    "post_sampling_probs": False,
-    "seed": SEED,
-}
 
-result = requests.post(url, json=settings, timeout=300)
+def build_settings() -> dict:
+    return {
+        "model": MODEL,
+        "prompt": PROMPT,
+        "n_predict": N_PREDICT,
+        "n_probs": N_PROBS,
+        "temperature": TEMP,
+        "post_sampling_probs": False,
+        "seed": SEED,
+    }
+
+
+result = requests.post(build_url(), json=build_settings(), timeout=300)
 print(result.json())

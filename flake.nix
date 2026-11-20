@@ -22,6 +22,7 @@
               ps: with ps; [
                 numpy
                 requests
+                json
               ]
             ))
           ];
