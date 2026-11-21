@@ -23,30 +23,34 @@ def build_settings(settings: dict) -> dict:
     }
 
 
-def convert(response):
+def convert(response) -> list[dict]:
     entries = response["completion_probabilities"]
     records = []
     for pos, entry in enumerate(entries):
         chosen_token = entry["token"]
-        chosen_p = math.exp(entry["logprob"])
+        chosen_prob = math.exp(entry["logprob"])
 
         alternatives = []
         for alt in entry["top_logprobs"]:
-            alternatives.append({"token": alt["token"], "p": math.exp(alt["logprob"])})
+            alternatives.append(
+                {"token": alt["token"], "prob": math.exp(alt["logprob"])}
+            )
 
         record = {
             "pos": pos,
             "token": chosen_token,
-            "prob": chosen_p,
-            "top_logprobs": alternatives,
+            "prob": chosen_prob,
+            "top_probs": alternatives,
         }
         records.append(record)
     return records
 
 
-def run(settings: dict):
-    result = requests.post(build_url(), json=build_settings(settings), timeout=300)
-    return {"meta": settings, "records": convert(result)}
+def run(settings: dict) -> dict:
+    sent = build_settings(settings)
+    result = requests.post(build_url(), json=sent, timeout=300)
+    result.raise_for_status()
+    return {"meta": sent, "records": convert(result.json())}
 
 
 if __name__ == "__main__":
