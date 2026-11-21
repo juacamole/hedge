@@ -2,30 +2,24 @@ import math
 
 import requests
 
-LLAMA_IP = "127.0.0.1"
-LLAMA_PORT = "8080"
+IP = "127.0.0.1"
+PORT = "8080"
 PATH = "/completion"
-MODEL = "qwen3.8-27b-abliterated"
-PROMPT = "The capital of France is"
-N_PREDICT = 3
-N_PROBS = 3
-TEMP = 1
-SEED = 0
 
 
 def build_url() -> str:
-    return "http://" + LLAMA_IP + ":" + LLAMA_PORT + PATH
+    return "http://" + IP + ":" + PORT + PATH
 
 
-def build_settings() -> dict:
+def build_settings(settings: dict) -> dict:
     return {
-        "model": MODEL,
-        "prompt": PROMPT,
-        "n_predict": N_PREDICT,
-        "n_probs": N_PROBS,
-        "temperature": TEMP,
+        "model": settings["model"],
+        "prompt": settings["prompt"],
+        "n_predict": settings["n_predict"],
+        "n_probs": settings["n_probs"],
+        "temperature": settings["temperature"],
         "post_sampling_probs": False,
-        "seed": SEED,
+        "seed": settings["seed"],
     }
 
 
@@ -50,5 +44,10 @@ def convert(response):
     return records
 
 
-result = requests.post(build_url(), json=build_settings(), timeout=300)
-print(convert(result.json()))
+def run(settings: dict):
+    result = requests.post(build_url(), json=build_settings(settings), timeout=300)
+    return {"meta": settings, "records": convert(result)}
+
+
+if __name__ == "__main__":
+    print("please run main.py instead")
