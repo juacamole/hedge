@@ -1,5 +1,6 @@
 import math
 
+import numpy as np
 import requests
 
 IP = "127.0.0.1"
@@ -23,7 +24,7 @@ def build_settings(settings: dict) -> dict:
     }
 
 
-def convert(response) -> list[dict]:
+def convert(response: dict) -> list[dict]:
     entries = response["completion_probabilities"]
     records = []
     for pos, entry in enumerate(entries):
@@ -44,6 +45,25 @@ def convert(response) -> list[dict]:
         }
         records.append(record)
     return records
+
+
+def metrics(record: dict) -> dict:
+    arr = np.array([alt["prob"] for alt in record["top_probs"]])
+    tokens = [alt["token"] for alt in record["top_probs"]]
+    prob = record["prob"]
+
+    m = {}
+    m["surprise"] = -math.log(prob) if prob > 0 else float("inf")
+    m["margin"] = float(arr[0] - arr[1]) if len(arr) >= 2 else None
+    nonzero = arr[arr > 0]
+    m["entropy"] = float(-np.sum(nonzero * np.log(nonzero)))
+    m["missing"] = max(0.0, float(1 - np.sum(arr)))
+    m["rank"] = tokens.index(record["token"]) if record["token"] in tokens else None
+    return m
+
+
+def perplexity(records: list[dict]) -> float:
+    return math.exp(np.mean([metrics(r)["surprise"] for r in records]))
 
 
 def run(settings: dict) -> dict:
