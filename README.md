@@ -70,3 +70,7 @@ Hedge sends the prompt to llama-server's `/completion` with `n_probs` set, gets 
 - only sees the top-N alternatives, so entropy is an approximation
 - no streaming, the UI waits for the whole completion
 - unsaved runs are gone when you quit
+
+## License
+
+MIT, see [LICENSE](LICENSE)
