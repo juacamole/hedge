@@ -1,0 +1,60 @@
+Screen { background: #000000; color: #c8c8c8; }
+
+#left { width: 36; }
+#right { width: 1fr; }
+
+#settings, #runs, #output, #tokens, #alts {
+    background: #000000;
+    border: round #2e2e2e;
+    border-title-color: #6e6e6e;
+    border-title-style: none;
+    border-subtitle-color: #6e6e6e;
+}
+#settings:focus-within, #runs:focus, #output:focus, #tokens:focus {
+    border: round #8a8a8a;
+    border-title-color: #e0e0e0;
+}
+
+#settings { height: auto; padding: 0 1; }
+#settings .row { height: 1; }
+#settings .key { width: 12; color: #6e6e6e; }
+#settings .value { width: 1fr; color: #c8c8c8; text-wrap: nowrap; text-overflow: ellipsis; }
+#settings Input { display: none; border: none; height: 1; padding: 0; width: 1fr; background: #000000; color: #c8c8c8; }
+#settings .row.-editing .value { display: none; }
+#settings .row.-editing Input { display: block; }
+#settings Input:focus { background: #2e2e2e; color: #ffffff; }
+#settings:focus .row.-cursor { background: #1a1a1a; }
+#settings:focus .row.-cursor Label, #settings:focus .row.-cursor Input { background: #1a1a1a; color: #ffffff; }
+
+#runs { height: 1fr; }
+#runs Label { width: 1fr; text-wrap: nowrap; text-overflow: ellipsis; }
+#runs > ListItem { background: #000000; color: #8a8a8a; padding: 0 1; }
+#runs > ListItem.-highlight { background: #1a1a1a; color: #ffffff; }
+#runs:focus > ListItem.-highlight { background: #2e2e2e; }
+
+#output { height: 1fr; padding: 0 1; }
+#spark { height: 2; margin: 0 1; }
+#spark > .sparkline--min-color { color: #3a3a3a; }
+#spark > .sparkline--max-color { color: #d8d8d8; }
+
+#tokens { height: 1fr; }
+#tokens > .datatable--header { background: #000000; color: #6e6e6e; text-style: none; }
+#tokens > .datatable--cursor { background: #2e2e2e; color: #ffffff; text-style: none; }
+#tokens:blur > .datatable--cursor { background: #1a1a1a; }
+#tokens > .datatable--hover { background: #0e0e0e; }
+#tokens > .datatable--header-hover { background: #000000; }
+
+#alts { height: auto; padding: 0 1; }
+
+#status { height: 1; padding: 0 1; color: #6e6e6e; background: #000000; }
+
+#prompt { border: round #2e2e2e; background: #000000; color: #e0e0e0; padding: 0 1; }
+#prompt:focus { border: round #8a8a8a; background: #0a0a0a; }
+
+Footer { background: #000000; color: #6e6e6e; }
+Footer FooterKey { background: #000000; color: #6e6e6e; }
+Footer FooterKey .footer-key--key { background: #000000; color: #e0e0e0; }
+Footer FooterKey:hover { background: #1a1a1a; }
+
+
+ScrollableContainer, DataTable, ListView { scrollbar-background: #000000; scrollbar-background-hover: #000000; scrollbar-background-active: #000000; scrollbar-color: #2e2e2e; scrollbar-color-hover: #6e6e6e; scrollbar-color-active: #8a8a8a; scrollbar-size-vertical: 1; }

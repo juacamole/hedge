@@ -24,3 +24,10 @@ def load(path: str) -> dict:
     if "meta" not in run or "records" not in run:
         raise ValueError(f"{path} is not a run file")
     return run
+
+
+def saved_paths() -> list[str]:
+    if not os.path.isdir(RUNS_DIR):
+        return []
+    names = sorted(n for n in os.listdir(RUNS_DIR) if n.endswith(".json"))
+    return [os.path.join(RUNS_DIR, n) for n in names]

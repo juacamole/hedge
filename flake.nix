@@ -22,7 +22,8 @@
               ps: with ps; [
                 numpy
                 requests
-                json
+                rich
+                textual
               ]
             ))
           ];
